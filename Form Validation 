@@ -1,0 +1,15 @@
+const validateForm = () => {
+    const { name, email, date, time, guests } = formData;
+    if (!name || !email || !date || !time || guests < 1) {
+      alert('Please fill out all fields correctly.');
+      return false;
+    }
+    return true;
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log('Form submitted:', formData);
+    }
+  };

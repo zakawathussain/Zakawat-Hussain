@@ -1,0 +1,33 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+import BookingForm from './BookingForm';
+
+test('renders booking form and submits data', () => {
+  render(<BookingForm />);
+
+  // Check if form fields are rendered
+  expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/date/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/time/i)).toBeInTheDocument();
+  expect(screen.getByLabelText(/number of guests/i)).toBeInTheDocument();
+
+  // Simulate user input
+  fireEvent.change(screen.getByLabelText(/name/i), { target: { value: 'John Doe' } });
+  fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'john@example.com' } });
+  fireEvent.change(screen.getByLabelText(/date/i), { target: { value: '2023-10-15' } });
+  fireEvent.change(screen.getByLabelText(/time/i), { target: { value: '18:00' } });
+  fireEvent.change(screen.getByLabelText(/number of guests/i), { target: { value: '4' } });
+
+  // Submit the form
+  fireEvent.click(screen.getByText(/submit/i));
+
+  // Check if the form data is logged (you can mock this in a real test)
+  console.log = jest.fn();
+  expect(console.log).toHaveBeenCalledWith('Form submitted:', {
+    name: 'John Doe',
+    email: 'john@example.com',
+    date: '2023-10-15',
+    time: '18:00',
+    guests: 4,
+  });
+});
